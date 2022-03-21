@@ -12,7 +12,7 @@ class Entity
 {
 public:
     Entity(const Model&);
-    void draw(Shader&);
+    void draw(Shader&, Shader&, bool);
     Transformation transformation;
 private:
     Model _model;

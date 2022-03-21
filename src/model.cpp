@@ -13,6 +13,14 @@ void Model::draw(Shader& shader)
     }
 }
 
+void Model::drawWireframe(Shader& shader)
+{
+    for(unsigned int i = 0; i < _meshes.size(); ++i)
+    {
+        _meshes[i].drawWireframe(shader);
+    }
+}
+
 void Model::load(const std::string& path)
 {
     Assimp::Importer importer;

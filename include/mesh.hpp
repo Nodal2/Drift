@@ -27,6 +27,7 @@ class Mesh
 public:
     Mesh(const std::vector<Vertex>&, const std::vector<unsigned int>&, const std::vector<Texture2>&);
     void draw(Shader&);
+    void drawWireframe(Shader&);
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
     std::vector<Texture2> textures;

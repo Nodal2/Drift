@@ -158,18 +158,18 @@ int main()
     glDebugMessageCallback(messageCallback, 0);
 
     /* shaders */
+    // normal shader (texture + lighting)
     Shader lightingShader = Shader("../shader/lighting_vertex.vs", "../shader/lighting_fragment.fs");
-    Shader lightShader = Shader("../shader/light_vertex.vs", "../shader/light_fragment.fs");
-    
-    if(!lightingShader.id || !lightShader.id)
+
+    // wireframe shader (white edges)
+    Shader wireframeShader = Shader("../shader/wireframe_vertex.vs", "../shader/wireframe_fragment.fs");
+    if(!lightingShader.id || !wireframeShader.id)
     {
         return -1;
     }
 
-    Scene scene = Scene(lightingShader);
+    Scene scene = Scene(lightingShader, wireframeShader);
     camera = &scene.camera;    
-
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         
     /* loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -178,7 +178,7 @@ int main()
         processInput(window);
 
         /* render */
-        glClearColor(0.7f, 0.8f, 0.7f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         scene.update();

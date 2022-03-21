@@ -1,6 +1,6 @@
 #include "scene.hpp"
 
-Scene::Scene(Shader& shader) : _shader(shader), camera(glm::vec3(0.0f, 0.0f, 0.0f), 0.02f)
+Scene::Scene(Shader& shader, Shader& wireframeShader) : _shader(shader), _wireframeShader(wireframeShader), camera(glm::vec3(0.0f, 0.0f, 0.0f), 0.02f)
 {
     float fov = 45.0f;
     _projectionMatrix = glm::perspective(glm::radians(fov), (float)1600/(float)900, 0.1f, 50.0f);
@@ -72,10 +72,14 @@ void Scene::update()
     _shader.setMat4F("u_projection", glm::value_ptr(_projectionMatrix));
     _shader.setVec3F("u_cameraPosition", glm::value_ptr(camera.getPosition()));
 
+    _wireframeShader.useProgram();
+    _wireframeShader.setMat4F("u_view", glm::value_ptr(camera.getViewMatrix()));
+    _wireframeShader.setMat4F("u_projection", glm::value_ptr(_projectionMatrix));
+
     _entities[_entities.size()-1].transformation.rotate(0.0f, 0.01f, 0.0f);
     for(unsigned int i = 0; i < _entities.size(); ++i)
     {
-        _entities[i].draw(_shader);
+        _entities[i].draw(_shader, _wireframeShader, true);
     }
 }
 

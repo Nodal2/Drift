@@ -39,12 +39,12 @@ struct SpotLight
 class Scene
 {
 public:
-    Scene(Shader&);
+    Scene(Shader&, Shader&);
     void update();
     Camera camera;
 private:
     void initShader();
-    Shader _shader;
+    Shader _shader, _wireframeShader;
     std::vector<Entity> _entities;
     DirectionalLight _directionalLight;
     std::vector<PointLight> _pointLights;

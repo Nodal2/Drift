@@ -14,6 +14,7 @@ class Model
 public:
     Model(const std::string&);
     void draw(Shader&);
+    void drawWireframe(Shader&);
 
 private:
     void load(const std::string&);

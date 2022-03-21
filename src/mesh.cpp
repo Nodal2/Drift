@@ -55,10 +55,22 @@ void Mesh::draw(Shader& shader)
             number = std::to_string(specularMapNumber);
             ++specularMapNumber;
         }
+        shader.useProgram();
         shader.set1I("u_material." + name + number, i);
     }
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(_vao);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+}
+
+void Mesh::drawWireframe(Shader& shader)
+{
+    glBindVertexArray(_vao);
+    shader.useProgram();
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glLineWidth(2.0f);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glBindVertexArray(0);
 }
